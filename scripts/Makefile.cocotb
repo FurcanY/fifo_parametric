@@ -1,0 +1,10 @@
+SIM ?= verilator
+TOPLEVEL_LANG ?= verilog
+VERILOG_SOURCES += $(PWD)/src/pkg/fifo_parametric_pkg.sv
+VERILOG_SOURCES += $(PWD)/src/rtl/fifo_parametric.sv
+TOPLEVEL = fifo_parametric
+MODULE   = tb.python.test_fifo_parametric
+ifeq ($(SIM), verilator)
+	EXTRA_ARGS += --trace --trace-structs -DFIFO_PARAMETRIC_DEBUG -Wno-UNUSEDSIGNAL -Wno-TIMESCALEMOD
+endif
+include $(shell cocotb-config --makefiles)/Makefile.sim

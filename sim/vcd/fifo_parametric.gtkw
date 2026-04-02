@@ -1,0 +1,44 @@
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Thu Apr  2 07:53:21 2026
+[*]
+[dumpfile] "/home/furkan-debian/RISC-V/SystemVerilog_Projects/fifo_parametric/sim/vcd/trace.vcd"
+[dumpfile_mtime] "Thu Apr  2 07:50:00 2026"
+[dumpfile_size] 7140
+[savefile] "/home/furkan-debian/RISC-V/SystemVerilog_Projects/fifo_parametric/sim/vcd/fifo_parametric.gtkw"
+[timestart] 0
+[size] 1213 624
+[pos] -27 -34
+*-14.700000 42800 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] fifo_parametric_tb.
+[sst_width] 267
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 163
+@28
+fifo_parametric_tb.uut.clk_i
+@22
+fifo_parametric_tb.uut.din_i[7:0]
+fifo_parametric_tb.uut.dout_o[7:0]
+@28
+fifo_parametric_tb.uut.rst_ni
+@22
+fifo_parametric_tb.uut.fifo_mem[0][7:0]
+fifo_parametric_tb.uut.fifo_mem[1][7:0]
+fifo_parametric_tb.uut.fifo_mem[2][7:0]
+fifo_parametric_tb.uut.fifo_mem[3][7:0]
+fifo_parametric_tb.uut.fifo_mem[4][7:0]
+fifo_parametric_tb.uut.fifo_mem[5][7:0]
+fifo_parametric_tb.uut.fifo_mem[6][7:0]
+fifo_parametric_tb.uut.fifo_mem[7][7:0]
+fifo_parametric_tb.uut.fifo_mem[8][7:0]
+fifo_parametric_tb.uut.fifo_mem[9][7:0]
+fifo_parametric_tb.uut.fifo_mem[10][7:0]
+fifo_parametric_tb.uut.fifo_mem[11][7:0]
+fifo_parametric_tb.uut.fifo_mem[12][7:0]
+fifo_parametric_tb.uut.fifo_mem[13][7:0]
+fifo_parametric_tb.uut.fifo_mem[14][7:0]
+@23
+fifo_parametric_tb.uut.fifo_mem[15][7:0]
+[pattern_trace] 1
+[pattern_trace] 0
