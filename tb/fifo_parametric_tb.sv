@@ -65,7 +65,8 @@ module fifo_parametric_tb;
             write_fifo(8'h10 + i[WIDTH_-1:0]);
         end
 
-        // Full Kontrolü
+        // Full Kontrolü (Posedge sonrası kontrol edilir)
+        @(posedge clk_i);
         assert (full_o === 1'b1) 
             $display("[%0t] [SUCCESS] FIFO Tam Dolu Bayrağı Doğrulandı.", $time);
         else 
@@ -80,16 +81,17 @@ module fifo_parametric_tb;
         end
 
         // Empty Kontrolü
+        @(posedge clk_i);
         assert (empty_o === 1'b1) 
             $display("[%0t] [SUCCESS] FIFO Tam Boş Bayrağı Doğrulandı.", $time);
         else 
             $error("[%0t] [ERROR] FIFO Boş Olmalıydı!", $time);
         
-        // --- TEST 2.1: Underflow Kontrolü (Hatalı Okuma Denemesi) ---
+        // --- TEST 2.1: Underflow Kontrolü ---
         $display("[%0t] [TEST 2.1] Underflow Koruması Test Ediliyor...", $time);
-        // read_fifo kullanmıyoruz çünkü kilitler (timeout verir). Manuel kontrol:
-        rd_ready_i = 1'b1;
-        @(posedge clk_i);
+        @(negedge clk_i);
+        rd_ready_i = 1'b1; 
+        @(negedge clk_i);
         rd_ready_i = 1'b0;
         assert (rd_valid_o === 1'b0) 
             $display("[%0t] [SUCCESS] Boş FIFO'dan veri okunması engellendi.", $time);
@@ -112,47 +114,48 @@ module fifo_parametric_tb;
 task automatic reset_fifo(int clk_time);
     begin
         $display("[%0t] [SYSTEM] Reset uygulanıyor...", $time);
-        rst_ni = 1'b0;
+        rst_ni = 1'b0; 
         #(CLOCK_PERIOD * clk_time);
+        @(negedge clk_i); // Düşen kenarda kaldır
         rst_ni = 1'b1;
-        @(posedge clk_i);
         $display("[%0t] [SYSTEM] Reset kaldırıldı.", $time);
     end
 endtask
 
 task automatic write_fifo(input logic [WIDTH_-1:0] input_data);
     begin
+        // Sinyal sürmeden önce düşen kenarı bekle
+        @(negedge clk_i);
         if (full_o) begin
-            $display("[%0t] [WARNING] Yazma Reddedildi: FIFO Dolu! (Data: %h)", $time, input_data);
+            $display("[%0t] [WARNING] Yazma Reddedildi: FIFO Dolu!", $time);
         end else begin
-            @(posedge clk_i);
             wr_valid_i = 1'b1;
-            din_i = input_data;
-            @(posedge clk_i);
+            din_i      = input_data;
+            @(negedge clk_i); // Bir sonraki düşen kenarda kapat
             wr_valid_i = 1'b0;
-            $display("[%0t] [WRITE] Veri içeri alındı: %h", $time, input_data);
+            $display("[%0t] [WRITE] Veri yazildi: %h", $time, input_data);
         end
     end
 endtask
 
 task automatic read_fifo(input logic [WIDTH_-1:0] expected_data);
     begin
-        // Senkronizasyon ve Timeout
+        // Veri geçerli olana kadar bekle
         fork : timeout_block
             begin
-                wait(rd_valid_o);
+                while(!rd_valid_o) @(posedge clk_i);
             end
             begin
-                #(CLOCK_PERIOD * 10);
+                #(CLOCK_PERIOD * 20);
                 if (!rd_valid_o) begin
-                    $display("[%0t] [FATAL] Okuma Hatası: Veri gelmedi (Timeout)!", $time);
+                    $display("[%0t] [FATAL] Okuma Hatası: Timeout!", $time);
                     $finish;
                 end
             end
         join_any
         disable fork;
 
-        // Veri Doğrulaması
+        // FWFT: Veriyi kontrol et
         assert (dout_o === expected_data)
             $display("[%0t] [READ] Doğrulandı: %h", $time, dout_o);
         else begin
@@ -160,20 +163,22 @@ task automatic read_fifo(input logic [WIDTH_-1:0] expected_data);
             $finish;
         end
 
-        @(posedge clk_i);
-        rd_ready_i = 1;
-        @(posedge clk_i);
-        rd_ready_i = 0;
+        // El sıkışmayı düşen kenarda yap
+        @(negedge clk_i);
+        rd_ready_i = 1'b1;
+        @(negedge clk_i);
+        rd_ready_i = 1'b0;
     end
 endtask
 
 task automatic test_simultaneous_rw();
     begin
+        // Paralel olarak düşen kenarda başlarlar
         fork
             write_fifo(8'hAB);
             read_fifo(8'hAB);
         join
-        $display("[%0t] [INFO] Eş zamanlı işlem başarıyla tamamlandı.", $time);
+        $display("[%0t] [INFO] Eş zamanlı işlem tamamlandı.", $time);
     end
 endtask
 
