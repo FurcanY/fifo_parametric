@@ -105,7 +105,6 @@ module fifo_parametric_tb;
         $display("\n-----------------------------------------------------");
         $display("  VERIFICATION COMPLETE - ALL TESTS PASSED");
         $display("-----------------------------------------------------\n");
-        #100;
         $finish;
     end
 

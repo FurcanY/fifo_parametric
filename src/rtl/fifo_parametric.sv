@@ -80,10 +80,11 @@ module fifo_parametric #(
 
     // --- Debug İşlemleri ---
     `ifdef FIFO_PARAMETRIC_DEBUG
-    always_comb begin : debug_logic
-        // Örn: Doluluk oranı hesaplama
-        /* Bu blok sadece simülasyonda gözlem amaçlıdır */
-    end
+        always_ff @(posedge clk_i) begin
+            $display("[%0t] [DEBUG] write pointer : %d",$time ,wr_ptr_q[ADDR_WIDTH-1:0]);
+            $display("[%0t] [DEBUG] read pointer  : %d",$time ,rd_ptr_q[ADDR_WIDTH-1:0]);
+            $display("[%0t] [DEBUG] dout_o        : %h",$time ,dout_o);
+        end
     `endif
 
 endmodule

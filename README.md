@@ -81,11 +81,7 @@ Debug modunu aktif etmek için Makefile'daki `V_FLAGS` içinde `-DFIFO_PARAMETRI
 
 ```verilog
 `ifdef FIFO_PARAMETRIC_DEBUG
-    always_ff @(posedge clk) begin
-        if (tick_s) begin
-            $display("[DEBUG] %t | LED Durumu Degisti: %b", $time, led_r);
-        end
-    end
+    // debug kodları
 `endif
 ```
 
@@ -94,3 +90,11 @@ Debug modunu aktif etmek için Makefile'daki `V_FLAGS` içinde `-DFIFO_PARAMETRI
 - **Dalga formu**: `sim/vcd/trace.vcd`
 - **Simülasyon logu**: `sim/logs/sim.log`
 - **Cocotb logu**: `sim/logs/cocotb.log`
+
+[python cocotb kullanımı](./tb/python/README.md) readme dosyasından cocotb ile ilgili dökümanteye bakabilirsiniz.
+
+## Kullanım Senaryosu
+
+[usage.sv](./src/rtl/usage.sv) kodu ile FIFO kullanım örneği bulabilirsiniz. 
+
+CMOD A7 35T FPGA kullanılarak denenmiştir. [cmod-a7-35t-xdc](./src/fpga/cmoda7_master.xdc) dosyası ile pin atamalarına bakabilirsiniz.

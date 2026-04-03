@@ -13,8 +13,8 @@ LOG_DIR     := ./sim/logs
 # --- Verilator Bayraklari --- #
 V_FLAGS := -Wall --trace --assert --timing \
 	       -Wno-CASEINCOMPLETE -Wno-MULTIDRIVEN -Wno-UNUSEDSIGNAL -Wno-TIMESCALEMOD \
-	       -DFIFO_PARAMETRIC_DEBUG \
-	       --top-module fifo_parametric_tb
+	       --top-module fifo_parametric_tb \
+		   -DFIFO_PARAMETRIC_DEBUG \
 
 # --------------------------------------------------
 #  HEDEFLER (TARGETS)
