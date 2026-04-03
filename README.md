@@ -1,6 +1,7 @@
 # fifo_parametric
 
 Şematik: 
+
 ![fifo](./docs/images/image_5.png)
 
 ![fifo](./docs/images/image_6.png)
@@ -93,8 +94,14 @@ Debug modunu aktif etmek için Makefile'daki `V_FLAGS` içinde `-DFIFO_PARAMETRI
 
 [python cocotb kullanımı](./tb/python/README.md) readme dosyasından cocotb ile ilgili dökümanteye bakabilirsiniz.
 
-## Kullanım Senaryosu
+## Kullanım Örneği
 
-[usage.sv](./src/rtl/usage.sv) kodu ile FIFO kullanım örneği bulabilirsiniz. 
+[usage.sv](./src/rtl/usage.sv) kodu ile FIFO kullanım örneğine bakabilirsiniz.
+
+![fifo](./docs/images/image_8.png)
+![fifo](./docs/images/image_9.png)
+
+Button kullanımında edge dedect kullanılmıştır. [Buradan](https://www.google.com/url?sa=t&source=web&rct=j&url=https%3A%2F%2Fforum.digikey.com%2Ft%2Fusing-the-configurable-logic-block-clb-for-rising-and-falling-edge-detection%2F53140&ved=0CBkQjhxqFwoTCPCXnbzn0ZMDFQAAAAAdAAAAABAj&opi=89978449) daha fazla detay öğrenebilirsiniz.
+
 
 CMOD A7 35T FPGA kullanılarak denenmiştir. [cmod-a7-35t-xdc](./src/fpga/cmoda7_master.xdc) dosyası ile pin atamalarına bakabilirsiniz.
